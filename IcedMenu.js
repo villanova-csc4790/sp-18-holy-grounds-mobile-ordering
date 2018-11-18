@@ -1,39 +1,93 @@
 import React, {Component} from 'react';
 import Expo from 'expo';
-import {View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView} from 'react-native';
+import {View, FlatList, StyleSheet, Image, TouchableOpacity, ScrollView, NavigatorIOS,} from 'react-native';
+import { Container, Content, Button, Left, Right, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 
-class IcedMenu extends React.Component {
+import Colors from './Colors';
+import Navbar from './Navbar';
+
+class HotMenu extends React.Component {
   static navigationOptions = ({ navigation}) => {
-	const params = navigation.state.params || {};
+		const params = navigation.state.params || {};
 		return {
-			headerTitle: 'Iced Menu',
+			header: null,
 		}
 	};
 
 render() {
-      return (
+  var left = (
+      <Left style={{flex:1}}>
+        <Button onPress={() => this.props.navigation.navigate('LocationsScreen')} transparent>
+          <Icon name='ios-arrow-back' />
+        </Button>
+      </Left>
+    );
+    var right = (
+      <Right style={{flex:1}}>
+        <Button onPress={() => this.props.navigation.navigate('CartScreen')} transparent>
+          <Icon name='ios-cart' />
+        </Button>
+      </Right>
+    );
+    return(
       <ScrollView>
-        <View style={styles.container}>
+      <Navbar left={left} right={right} title='HOT MENU' style={{ fontSize: 25, color: 'white'}}/>
+      <View style={styles.container}>
+      
+      <View style={styles.row}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('AmericanoScreen')}>
+      <Image source={require('./Hot Drinks/Americano.jpg')} style={styles.image} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('CappuccinoScreen')}>
+      <Image source={require('./Hot Drinks/Cappuccino.jpg')}
+style={styles.image} />
+</TouchableOpacity>
+      </View>
 
           <View style={styles.row}>
-            <Image source={require('./Iced Drinks/Javiva.jpg')}
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('ChaiTeaLatteScreen')}>
+            <Image source={require('./Hot Drinks/ChaiTeaLatte.jpg')}
               style={styles.image} />
-            <Image source={require('./Iced Drinks/IcedBlackTea.jpg')}
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('EspressoScreen')}>
+            <Image source={require('./Hot Drinks/Espresso.jpg')}
               style={styles.image} />
+              </TouchableOpacity>
           </View>
 
           <View style={styles.row}>
-            <Image source={require('./Iced Drinks/IcedCoffee.jpg')}
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('HotChocolateScreen')}>
+            <Image source={require('./Hot Drinks/HotChocolate.jpg')}
               style={styles.image} />
-            <Image source={require('./Iced Drinks/IcedGreenTea.jpg')}
+              </TouchableOpacity>
+               <TouchableOpacity onPress={() => this.props.navigation.navigate('LatteScreen')}>
+           <Image source={require('./Hot Drinks/Latte.jpg')}
               style={styles.image} />
-          </View>
+              </TouchableOpacity>
+        </View>
 
-          <View style={styles.row}>
-            <Image source={require('./Iced Drinks/IcedLatte.jpg')}
-              style={styles.image} />
-              </View>
+        <View style={styles.row}>
+         <TouchableOpacity onPress={() => this.props.navigation.navigate('MatchaLatteScreen')}>
+          <Image source={require('./Hot Drinks/MatchaLatte.jpg')}
+            style={styles.image} />
+             </TouchableOpacity>
+             <TouchableOpacity onPress={() => this.props.navigation.navigate('MightyLeafTeaScreen')}>
+          <Image source={require('./Hot Drinks/MightyLeafTea.jpg')}
+            style={styles.image} />
+             </TouchableOpacity>
+        </View>
+
+        <View style={styles.row}>
+         <TouchableOpacity onPress={() => this.props.navigation.navigate('MochaScreen')}>
+          <Image source={require('./Hot Drinks/Mocha.jpg')}
+            style={styles.image} />
+             </TouchableOpacity>
+             <TouchableOpacity onPress={() => this.props.navigation.navigate('Coffee1Screen')}>
+        <Image source={require('./Hot Drinks/Coffee.jpg')}
+            style={styles.image} />
+             </TouchableOpacity>
+        </View>
 
       </View>
     </ScrollView>
@@ -41,12 +95,12 @@ render() {
 }
 }
 
-export default IcedMenu;
+export default HotMenu;
  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#fdfdfd',
   },
   row:{
     flex:1,
