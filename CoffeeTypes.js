@@ -1,10 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Button, ImageBackground, TouchableOpacity, NavigatorIOS} from 'react-native';
+import {StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity, NavigatorIOS} from 'react-native';
 import Expo from 'expo';
+import { Container, Content, Button, Left, Right, Icon, Picker, Item, Grid, Col, Toast, Text as NBText } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 import HotMenuScreen from "./HotMenu";
 import IcedMenuScreen from "./IcedMenu";
 
+import Colors from './Colors';
+import Navbar from './Navbar';
 
 class CoffeeType extends React.Component {
   static navigationOptions = ({ navigation}) => {
@@ -14,9 +17,24 @@ class CoffeeType extends React.Component {
 		}
 	};
 
-  render() {
-      return (
-    <View style={styles.container}>
+render() {
+  var left = (
+      <Left style={{flex:1}}>
+        <Button onPress={() => this.props.navigation.navigate('LocationsScreen')} transparent>
+          <Icon name='ios-arrow-back' />
+        </Button>
+      </Left>
+    );
+    var right = (
+      <Right style={{flex:1}}>
+        <Button onPress={() => this.props.navigation.navigate('CartScreen')} transparent>
+          <Icon name='ios-cart' />
+        </Button>
+      </Right>
+    );
+    return(
+      <View style={styles.container}>
+      <Navbar left={left} right={right} title='HOT MENU' style={{ fontSize: 25, color: 'white'}}/>
       <TouchableOpacity onPress={() => this.props.navigation.navigate('HotMenuScreen')} style={styles.button2}>
         <Text style={styles.paragraph}>Hot</Text>
       </TouchableOpacity>
@@ -58,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     left: '20%',
     borderWidth: 2,
-    top: 70,
+    top: 20,
     width: 170,
     height: 170,
     backgroundColor: '#0A547B',
