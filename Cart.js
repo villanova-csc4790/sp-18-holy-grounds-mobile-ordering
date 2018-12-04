@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, AsyncStorage, Image } from 'react-native';
-import { Container, Content, View, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col } from 'native-base';
-import { Actions } from 'react-native-router-flux';
+import { Container, Content, View, Header, Icon, Button, Left, Right, Body, Title, List, ListItem, Thumbnail, Grid, Col, Item } from 'native-base';
+import {Actions} from "react-native-router-flux"
 
 // Our custom files and classes import
 import Colors from './Colors';
@@ -20,7 +20,9 @@ export default class Cart extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        cartItems: []
+        cartItems: [],
+        total: '',
+        item: '',
       };
   }
 
@@ -34,7 +36,7 @@ export default class Cart extends Component {
   render() {
     var left = (
       <Left style={{flex:1}}>
-        <Button onPress={() => this.props.navigation.navigate('CoffeeTypeScreen')} transparent>
+        <Button onPress={() => this.props.navigation.navigate('CoffeeScreen')} transparent>
           <Icon name="ios-arrow-back" size={38} style={{fontSize: 38}} />
         </Button>
       </Left>
@@ -58,6 +60,7 @@ export default class Cart extends Component {
                     <Icon name='ios-card' />
                     <Text style={{color: '#fdfdfd'}}>Checkout</Text>
                   </Button>
+
                 </Col>
                 <Col style={{paddingLeft: 5, paddingRight: 10}}>
                   <Button onPress={() => this.removeAllPressed()} style={{borderWidth: 1, borderColor: Colors.navbarBackgroundColor}} block iconRight transparent>
@@ -71,27 +74,30 @@ export default class Cart extends Component {
       </Container>
     );
   }
-
   renderItems() {
     let items = [];
+    var total = 0;
+    var count = 0;
     this.state.cartItems.map((item, i) => {
+      total += parseFloat(item.price);
+      count++;
       items.push(
         <ListItem
           key={i}
           last={this.state.cartItems.length === i+1}
         >
           <Body style={{paddingLeft: 10}}>
-            <Text style={{fontSize: 18}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
               {item.quantity > 1 ? item.quantity+"x " : null}
               {item.title}
             </Text>
-            <Text style={{fontSize: 16, fontWeight: 'bold', marginBottom: 10}}>{item.price}</Text>
-            <Text style={{fontSize: 14 ,fontStyle: 'italic'}}>Size: {item.size}</Text>
-            {item.milk != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Color: {item.milk}</Text> : null}
-            {item.color != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Color: {item.color}</Text> : null}
-            {item.xEspresso != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Color: {item.xEspresso}</Text> : null}
-            {item.xFlavor != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Color: {item.extraflavors}</Text> : null}
-
+            <Text style={{fontSize: 16, marginBottom: 10}}>${item.price}</Text>
+            <Text style={{fontSize: 14 ,fontStyle: 'italic'}}> Size: {item.size}</Text>
+            {item.milk != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Milk: {item.milk}</Text> : null}
+            {item.color != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Flavor: {item.color}</Text> : null}
+            {item.xEspresso != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Extra Espresso: {item.xEspresso}</Text> : null}
+            {item.xFlavor != 'empty' ? <Text style={{ fontSize: 14, fontStyle: 'italic' }}> Extra Flavor: {item.extraflavors}</Text> : null}
+            {count == this.state.cartItems.length ? <Text style={{ fontSize: 20, fontStyle: 'bold' }}>Total: ${total}</Text> : null}
           </Body>
           <Right>
             <Button style={{marginLeft: -25}} transparent onPress={() => this.removeItemPressed(item)}>
@@ -141,10 +147,10 @@ export default class Cart extends Component {
     AsyncStorage.setItem("CART",JSON.stringify([]));
   }
 
-  checkout() {
-    Actions.checkout({cartItems: this.state.cartItems});
-  }
 
+checkout() {
+    this.props.navigation.navigate('CheckoutScreen');
+  }
 
 }
 
