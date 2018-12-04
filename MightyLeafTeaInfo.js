@@ -60,7 +60,7 @@ export default class MightyLeafTeaInfo extends Component {
     );
     return(
       <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} right={right} title={this.state.product.title} style={{ fontSize: 25, color: 'white'}}/>
+        <Navbar left={left} right={right} style={{ fontSize: 25, color: 'white'}}/>
         <Content>
             <Image source={require('./Hot Drinks/MightyLeafTea.jpg')} style={styles.image} />
           <View style={{backgroundColor: '#fdfdfd', paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, alignItems: 'center'}}>
@@ -153,6 +153,8 @@ export default class MightyLeafTeaInfo extends Component {
 
   addToCart() {
     var product = this.state.product;
+    var price = this.price();
+    product['price'] = price;
     product['size'] = this.state.selectedSize;
     product['quantity'] = this.state.quantity;
     AsyncStorage.getItem("CART", (err, res) => {
@@ -162,13 +164,6 @@ export default class MightyLeafTeaInfo extends Component {
         items.push(product);
         AsyncStorage.setItem("CART",JSON.stringify(items));
       }
-      /*Toast.show({
-        text: 'Product added to your cart !',
-        position: 'bottom',
-        type: 'success',
-        buttonText: 'Dismiss',
-        duration: 3000
-      });*/
     });
     
   }
