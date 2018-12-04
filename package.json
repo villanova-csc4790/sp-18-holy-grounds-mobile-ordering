@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "native-base": "2.8.1",
+    "react-native-easy-listview-gridview": "1.0.3",
+    "react-native-elements": "0.19.1",
+    "react-native-grid-list": "1.0.9",
+    "react-native-gridview": "0.1.2",
+    "react-native-picker-select": "5.0.0",
+    "react-native-router-flux": "4.0.6",
+    "react-native-snap-carousel": "3.7.5",
+    "react-native-vector-icons/FontAwesome": "6.1.0",
+    "react-navigation": "2.16.0",
+    "react-navigation-deprecated-tab-navigator": "*"
+  }
+}
