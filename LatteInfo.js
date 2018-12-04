@@ -69,7 +69,7 @@ export default class LatteInfo extends Component {
     );
     return(
       <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} right={right} title={this.state.product.title} style={{ fontSize: 25, color: 'white'}}/>
+        <Navbar left={left} right={right} style={{ fontSize: 25, color: 'white'}}/>
         <Content>
             <Image source={require('./Hot Drinks/Latte.jpg')} style={styles.image} />
           <View style={{backgroundColor: '#fdfdfd', paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, alignItems: 'center'}}>
@@ -132,8 +132,6 @@ export default class LatteInfo extends Component {
                 </Picker>
               </Col>
             </Grid>
-
-          
             <Grid>
               <Col>
                 <View style={{flex: 1, justifyContent: 'center'}}>
@@ -266,11 +264,13 @@ export default class LatteInfo extends Component {
 
   addToCart() {
     var product = this.state.product;
+    var price = this.price();
    product['color'] = this.state.selectedColor;
     product['size'] = this.state.selectedSize;
     product['milk'] = this.state.selectedMilk;
     product['quantity'] = this.state.quantity;
     product['xEspresso'] = this.state.xEspresso;
+    product['price'] = price;
     product['extraflavors'] = this.state.selectedextraflavor;
     AsyncStorage.getItem("CART", (err, res) => {
       if(!res) AsyncStorage.setItem("CART",JSON.stringify([product]));
@@ -279,13 +279,6 @@ export default class LatteInfo extends Component {
         items.push(product);
         AsyncStorage.setItem("CART",JSON.stringify(items));
       }
-      /*Toast.show({
-        text: 'Product added to your cart !',
-        position: 'bottom',
-        type: 'success',
-        buttonText: 'Dismiss',
-        duration: 3000
-      });*/
     });
   }
 
