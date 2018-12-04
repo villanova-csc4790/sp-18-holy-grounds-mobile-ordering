@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, Button, ImageBackground, TouchableOpacity, NavigatorIOS} from 'react-native';
 import Expo from 'expo';
 import { StackNavigator } from 'react-navigation';
-import MenuScreen from "./Menu";
 
 class Location extends React.Component {
   static navigationOptions = ({ navigation}) => {
@@ -15,16 +14,16 @@ class Location extends React.Component {
   render() {
       return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('MenuScreen')} style={styles.button2}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('CoffeeScreen')} style={styles.button2}>
         <Text style={styles.paragraph}>Bartley</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('MenuScreen')}
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('CoffeeScreen')}
         style={styles.button2}>
-        <Text style={styles.paragraph}>Connelly </Text>
+        <Text style={styles.paragraph}>Connelly</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('MenuScreen')}
+      <TouchableOpacity onPress={() => this.props.navigation.navigate('CoffeeScreen')}
         style={styles.button2}>
-        <Text style={styles.paragraph}>CEER </Text>
+        <Text style={styles.paragraph}>CEER</Text>
       </TouchableOpacity>
             }} />
     </View>
