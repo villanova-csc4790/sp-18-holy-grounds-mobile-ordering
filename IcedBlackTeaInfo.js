@@ -55,7 +55,7 @@ export default class IcedBlackTeaInfo extends Component {
   render() {
     var left = (
       <Left style={{flex:1}}>
-        <Button onPress={() => this.props.navigation.navigate('IcedMenu')} transparent>
+        <Button onPress={() => this.props.navigation.navigate('IcedMenuScreen')} transparent>
           <Icon name='ios-arrow-back' />
         </Button>
       </Left>
@@ -69,9 +69,9 @@ export default class IcedBlackTeaInfo extends Component {
     );
     return(
       <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} right={right} title={this.state.product.title} style={{fontSize: 18, color: 'white', marginLeft: 5}}/>
+        <Navbar left={left} right={right}  style={{fontSize: 18, color: 'white', marginLeft: 5}}/>
         <Content>
-            <Image source={require('./Hot Drinks/IcedBlackTea.jpg')} style={styles.image} />
+            <Image source={require('./Iced Drinks/IcedBlackTea.jpg')} style={styles.image} />
           <View style={{backgroundColor: '#fdfdfd', paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, alignItems: 'center'}}>
             <Grid>
               <Col>
@@ -148,26 +148,6 @@ export default class IcedBlackTeaInfo extends Component {
                 >
                   {this.renderSize()}
                 </Picker>
-              </Col>
-            </Grid>
-            <Grid>
-              <Col>
-                <View style={{flex: 1, justifyContent: 'center'}}>
-                  <Text>Extra Expresso Shot:</Text>
-                </View>
-              </Col>
-              <Col size={3}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <Button style={{flex: 1}} icon light onPress={() => this.setState({xEspresso: this.state.xEspresso>1 ? this.state.xEspresso-1 : 0})} >
-                    <Icon name='ios-remove-outline' />
-                  </Button>
-                  <View style={{flex: 4, justifyContent: 'center', alignItems: 'center', paddingLeft: 15, paddingRight: 15}}>
-                    <Text style={{fontSize: 18}}>{this.state.xEspresso}</Text>
-                  </View>
-                  <Button style={{flex: 1}} icon light onPress={() => this.setState({xEspresso: this.state.xEspresso+1})}>
-                    <Icon name='ios-add' />
-                  </Button>
-                </View>
               </Col>
             </Grid>
             <Grid>
@@ -264,12 +244,13 @@ export default class IcedBlackTeaInfo extends Component {
 
   addToCart() {
     var product = this.state.product;
+    var price = this.price();
     product['color'] = this.state.selectedColor;
     product['size'] = this.state.selectedSize;
     product['milk'] = this.state.selectedMilk;
     product['quantity'] = this.state.quantity;
-    product['xEspresso'] = this.state.xEspresso;
     product['extraflavors'] = this.state.selectedextraflavor;
+    product['price'] = price;
     AsyncStorage.getItem("CART", (err, res) => {
       if(!res) AsyncStorage.setItem("CART",JSON.stringify([product]));
       else {
@@ -277,13 +258,6 @@ export default class IcedBlackTeaInfo extends Component {
         items.push(product);
         AsyncStorage.setItem("CART",JSON.stringify(items));
       }
-      /*Toast.show({
-        text: 'Product added to your cart !',
-        position: 'bottom',
-        type: 'success',
-        buttonText: 'Dismiss',
-        duration: 3000
-      });*/
     });
   }
   
@@ -297,31 +271,19 @@ price() {
     var xFlavor = num * .75
     var extras = xEspresso + xFlavor
     if (this.state.selectedColor != 'None'){
-      if (this.state.selectedSize == 'Short - 8 oz'){
-        value = this.state.quantity * (3.50 + extras);
-      }
-      if (this.state.selectedSize == 'Small - 12 oz'){
-        value = this.state.quantity * (3.15 + extras);
-      }
-      if (this.state.selectedSize == 'Medium - 16 oz'){
-        value = this.state.quantity * (4.65 + extras);
+      if (this.state.selectedSize == 'Small - 16 oz'){
+        value = this.state.quantity * (2.25 + extras);
       }
       if (this.state.selectedSize == 'Large - 24 oz'){
-        value = this.state.quantity * (5.25 + extras);
+        value = this.state.quantity * (2.70 + extras);
       }
     }
     if (this.state.selectedColor == 'None'){
-      if (this.state.selectedSize == 'Short - 8 oz'){
-        value = this.state.quantity * (2.75 + extras);
-      }
-      if (this.state.selectedSize == 'Small - 12 oz'){
-        value = this.state.quantity * (2.40 + extras);
-      }
-      if (this.state.selectedSize == 'Medium - 16 oz'){
-        value = this.state.quantity * (3.90 + extras);
+      if (this.state.selectedSize == 'Small - 16 oz'){
+        value = this.state.quantity * (1.70 + extras);
       }
       if (this.state.selectedSize == 'Large - 24 oz'){
-        value = this.state.quantity * (4.50 + extras);
+        value = this.state.quantity * (2.15 + extras);
       }
     }
     value = value.toFixed(2);
@@ -344,6 +306,7 @@ const dummyProduct = {
   title: 'Iced Black Tea',
   colors:['None', 'Vanilla', 'Carmel', 'Hazelnut', 'Chocolate', 'Sugar-Free Vanilla'],
   milks: ['Whole', 'Low-Fat', 'Non-Fat', 'Almond', 'Soy'],
-  sizes: ['Short - 8 oz', 'Small - 12 oz', 'Medium - 16 oz', 'Large - 24 oz'],
-  extraflavors: ['No', 'Yes']
+  sizes: ['Small - 16 oz', 'Large - 24 oz'],
+  extraflavors: ['No', 'Yes'],
+  xEspresso: 'empty',
 };
