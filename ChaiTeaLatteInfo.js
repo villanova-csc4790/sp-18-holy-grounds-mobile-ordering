@@ -69,7 +69,7 @@ export default class ChaiTeaLatteInfo extends Component {
     );
     return(
       <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} right={right} title={this.state.product.title} style={{fontSize: 18, color: 'white', marginLeft: 5}}/>
+        <Navbar left={left} right={right}  style={{fontSize: 18, color: 'white', marginLeft: 5}}/>
         <Content>
             <Image source={require('./Hot Drinks/ChaiTeaLatte.jpg')} style={styles.image} />
           <View style={{backgroundColor: '#fdfdfd', paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, alignItems: 'center'}}>
@@ -264,12 +264,14 @@ export default class ChaiTeaLatteInfo extends Component {
 
   addToCart() {
     var product = this.state.product;
+    var price = this.price();
     product['color'] = this.state.selectedColor;
     product['size'] = this.state.selectedSize;
     product['milk'] = this.state.selectedMilk;
     product['quantity'] = this.state.quantity;
     product['xEspresso'] = this.state.xEspresso;
     product['extraflavors'] = this.state.selectedextraflavor;
+    product['price'] = price;
     AsyncStorage.getItem("CART", (err, res) => {
       if(!res) AsyncStorage.setItem("CART",JSON.stringify([product]));
       else {
@@ -277,13 +279,6 @@ export default class ChaiTeaLatteInfo extends Component {
         items.push(product);
         AsyncStorage.setItem("CART",JSON.stringify(items));
       }
-      /*Toast.show({
-        text: 'Product added to your cart !',
-        position: 'bottom',
-        type: 'success',
-        buttonText: 'Dismiss',
-        duration: 3000
-      });*/
     });
   }
   
