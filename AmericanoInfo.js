@@ -25,7 +25,6 @@ export default class AmericanoInfo extends Component {
       product: {},
       activeSlide: 0,
       quantity: 1,
-      price: '',
       selectedSize: '',
     };
   }
@@ -44,6 +43,7 @@ export default class AmericanoInfo extends Component {
   }
 
   render() {
+    const price = this.price();
     var left = (
       <Left style={{flex:1}}>
         <Button onPress={() => this.props.navigation.navigate('HotMenuScreen')} transparent>
@@ -60,13 +60,13 @@ export default class AmericanoInfo extends Component {
     );
     return(
       <Container style={{backgroundColor: '#fdfdfd'}}>
-        <Navbar left={left} right={right} title={this.state.product.title} style={{ fontSize: 25, color: 'white'}}/>
+        <Navbar left={left} right={right} style={{ fontSize: 25, color: 'white'}}/>
         <Content>
             <Image source={require('./Hot Drinks/Americano.jpg')} style={styles.image} />
           <View style={{backgroundColor: '#fdfdfd', paddingTop: 10, paddingBottom: 10, paddingLeft: 12, paddingRight: 12, alignItems: 'center'}}>
             <Grid>
               <Col>
-                  <Text style={{fontSize: 25, fontWeight: 'bold'}}>${this.price()}</Text>: null}
+                  <Text style={{fontSize: 25, fontWeight: 'bold'}}>${price}</Text>: null}
               </Col>
             </Grid>
             <Grid style={{marginTop: 15}}>
@@ -149,20 +149,12 @@ export default class AmericanoInfo extends Component {
     return size;
   }
 
-  renderPrice(){
-    let price = 0;
-    if(this.state.product.size == 'Single')
-      price  = 1.85;
-    if(this.state.product.size == 'Double')
-      price = 2.50;
-    return price;
-}
-
-
   addToCart() {
     var product = this.state.product;
+    var price = this.price();
     product['size'] = this.state.selectedSize;
     product['quantity'] = this.state.quantity;
+    product['price'] = price;
     product['image'] = this.state.image;
     AsyncStorage.getItem("CART", (err, res) => {
       if(!res) AsyncStorage.setItem("CART",JSON.stringify([product]));
@@ -171,26 +163,19 @@ export default class AmericanoInfo extends Component {
         items.push(product);
         AsyncStorage.setItem("CART",JSON.stringify(items));
       }
-      //Toast.show({
-       // text: 'Product added to your cart!',
-       // position: 'bottom',
-        //type: 'success',
-        //buttonText: 'Dismiss',
-        //duration: 3000
-       // });
     });
   }
 price() {
-   var value = 0;
+   var price = 0;
     if (this.state.selectedSize == 'Single'){
-        value = this.state.quantity * 1.85;
+        price = this.state.quantity * 1.85;
     }
     if (this.state.selectedSize == 'Double'){
-        value = this.state.quantity * 2.50;
+        price = this.state.quantity * 2.50;
     }
-    value = value.toFixed(2);
-    return value;
-  }
+    price = price.toFixed(2);
+    return price;
+      }
 
 }
 const styles = StyleSheet.create({
