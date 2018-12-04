@@ -19,7 +19,7 @@ class IcedMenu extends React.Component {
 render() {
   var left = (
       <Left style={{flex:1}}>
-        <Button onPress={() => this.props.navigation.navigate('LocationsScreen')} transparent>
+        <Button onPress={() => this.props.navigation.navigate('CoffeeScreen')} transparent>
           <Icon name='ios-arrow-back' />
         </Button>
       </Left>
