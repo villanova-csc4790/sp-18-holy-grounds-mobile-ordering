@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, Text, View, Image, Button, ImageBackground, TouchableOpacity, NavigatorIOS} from 'react-native';
 import Expo from 'expo';
 import { StackNavigator } from 'react-navigation';
-import MenuScreen from "./Menu";
 
 class LogIn extends React.Component {
   static navigationOptions = ({ navigation}) => {
